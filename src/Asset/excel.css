@@ -1,0 +1,38 @@
+*{
+    box-sizing: border-box;
+}
+
+table{
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td{
+    width: 48px;
+    height: 24px;
+    border:  1px solid lightgray;
+    outline: none;
+}
+input{
+    width: 90%;
+    height: 80%;
+}
+.unsel{
+    background-color: #ddd;
+    outline: none;
+    text-align: center;
+}
+
+.readwrite {
+    -moz-user-modify: read-write-plaintext-only;
+    -webkit-user-modify: read-write-plaintext-only;
+    text-decoration-skip-ink: none;
+    border:  3px solid lightgray;
+    outline: none;
+    background-color: #ddd;
+}
+
+.sel{
+    background-color: aqua;
+    color: white;
+}
