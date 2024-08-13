@@ -13,6 +13,7 @@ const Sheet1: any = ((e: any) => {
     }, []);
     if(setting.data.data === undefined)
         return ;
+    
     const handleChange = (e : any) =>{
         console.log(e.target.value);
     }
