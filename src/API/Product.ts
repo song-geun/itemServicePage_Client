@@ -7,13 +7,13 @@ export interface data {
   p_id : any
   p_name : any
   value : any
-  quatity : any
+  quantity : any
 }
 const data = {
   p_id : undefined,
   p_name : undefined,
   value : undefined,
-  quatity : undefined,
+  quantity : undefined,
 }
 export interface Product {
   data : data[]
@@ -37,7 +37,12 @@ export const Product = createSlice({
       {
         if(state.data[i].p_id == action.payload.p_id)
         {
-          
+          if(action.payload.col == "p_name")
+            state.data[i].p_name = action.payload.data;
+          if(action.payload.col == "value")
+            state.data[i].value = action.payload.data;
+          if(action.payload.col == "quantity")
+            state.data[i].quantity = action.payload.data;
         } 
       }
     }
