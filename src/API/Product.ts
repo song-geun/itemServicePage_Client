@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import instance from "./axios";
+import requests from "./requests";
 
 export interface data {
   p_id : any
@@ -15,13 +16,13 @@ const data = {
   quatity : undefined,
 }
 export interface Product {
-  data : data
+  data : data[]
   isLoading : any
   error : any
 }
 
 const initialState: Product = {
-  data : data,
+  data : [],
   isLoading : undefined,
   error : undefined,
 };
@@ -30,7 +31,16 @@ export const Product = createSlice({
   name: "Product",
   initialState,
   reducers: {
-    
+    setQuantity : (state, action : PayloadAction<any>) =>{\
+      const size = state.data.length;
+      for(let i = 0;i < size ; i++)
+      {
+        if(state.data[i].p_id == action.payload.p_id)
+        {
+          
+        } 
+      }
+    }
   },
   extraReducers : (builder) =>{
     builder
@@ -76,11 +86,9 @@ export const Getsheet = createAsyncThunk(
   "list",
   async () => {
     try {
-      const resp = await instance.get();
-      console.log(resp);
+      const resp = await instance.get(requests.list);
       return resp;
     } catch (e) {
-      console.log("error");
       return undefined;
     }
   }
@@ -90,6 +98,7 @@ export const inupsheet = createAsyncThunk(
   async (data: any) => {
     try {
       const resp = await instance.post(
+        requests.insertAll,
         JSON.stringify(data)
       );
       return resp;
