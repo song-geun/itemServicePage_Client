@@ -31,7 +31,7 @@ export const Product = createSlice({
   name: "Product",
   initialState,
   reducers: {
-    setQuantity : (state, action : PayloadAction<any>) =>{\
+    setD : (state, action : PayloadAction<any>) =>{
       const size = state.data.length;
       for(let i = 0;i < size ; i++)
       {
@@ -114,6 +114,6 @@ export const inupsheet = createAsyncThunk(
 )
 
 export const {
-  
+  setD
 } = Product.actions;
 export default Product.reducer;
