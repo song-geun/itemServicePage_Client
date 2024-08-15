@@ -2,14 +2,16 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import HOME from './PAGE/HOME';
-import { Route } from 'react-router-dom';
-import Nav from './Components/Nav';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <Route path="App">
-      <Route index element={<Nav/>}/>
-    </Route>
+    <Routes>
+      <Route path="App">
+        <Route index element={<HOME />} />
+      </Route>
+    </Routes>
+
   );
 }
 
