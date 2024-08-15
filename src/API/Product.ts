@@ -4,57 +4,68 @@ import instance from "./axios";
 import requests from "./requests";
 
 export interface data {
-  p_id : any
-  p_name : any
-  value : any
-  quantity : any
+  p_id: number
+  p_name: string
+  value: number
+  quantity: number
 }
 const data = {
-  p_id : undefined,
-  p_name : undefined,
-  value : undefined,
-  quantity : undefined,
+  p_id: undefined,
+  p_name: undefined,
+  value: undefined,
+  quantity: undefined,
+}
+
+export interface inp {
+  p_id: number
+  col: string
+  data: string
 }
 export interface Product {
-  data : data[]
-  isLoading : any
-  error : any
+  data: any
+  isLoading: any
+  error: any
 }
 
 const initialState: Product = {
-  data : [],
-  isLoading : undefined,
-  error : undefined,
+  data: [],
+  isLoading: undefined,
+  error: undefined,
 };
 
 export const Product = createSlice({
   name: "Product",
   initialState,
   reducers: {
-    setD : (state, action : PayloadAction<any>) =>{
-      const size = state.data.length;
-      for(let i = 0;i < size ; i++)
-      {
-        if(state.data[i].p_id == action.payload.p_id)
-        {
-          if(action.payload.col == "p_name")
+    setD: (state, action: PayloadAction<inp>) => {
+      const n = state.data.length;
+      for (let i = 0; i < n; i++) {
+        if (state.data[i].p_id.toString() === action.payload.p_id.toString()) {
+          if (action.payload.col == "p_name")
             state.data[i].p_name = action.payload.data;
-          if(action.payload.col == "value")
-            state.data[i].value = action.payload.data;
-          if(action.payload.col == "quantity")
-            state.data[i].quantity = action.payload.data;
-        } 
+          if (action.payload.col == "value")
+            state.data[i].value = Number(action.payload.data);
+          if (action.payload.col == "quantity")
+            state.data[i].quantity = Number(action.payload.data);
+        }
       }
-    }
+    },
   },
-  extraReducers : (builder) =>{
+  extraReducers: (builder) => {
     builder
-      .addCase(Getsheet.pending, (state) =>{
+      .addCase(Getsheet.pending, (state) => {
       })
-      .addCase(Getsheet.fulfilled, (state,action)=>{
-        state.data = action.payload;
+      .addCase(Getsheet.fulfilled, (state, action) => {
+        state.data = action.payload.data;
       })
-      .addCase(Getsheet.rejected, (state, action: any) =>{
+      .addCase(Getsheet.rejected, (state, action: any) => {
+        state.error = action.payload;
+      })
+      .addCase(inupsheet.pending, (state) => {
+      })
+      .addCase(inupsheet.fulfilled, (state, action) => {
+      })
+      .addCase(inupsheet.rejected, (state, action: any) => {
         state.error = action.payload;
       })
   }
@@ -102,9 +113,10 @@ export const inupsheet = createAsyncThunk(
   "insertAll",
   async (data: any) => {
     try {
+      console.log(data.data);
       const resp = await instance.post(
         requests.insertAll,
-        JSON.stringify(data)
+        JSON.stringify(data.data)
       );
       return resp;
     } catch (e) {
