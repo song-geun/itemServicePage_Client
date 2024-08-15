@@ -5,12 +5,14 @@ const Nav: any = ((e: object) => {
     return (
         <div className="flex-row w-screen">
             <div className="flex w-screen justify-between">
-                <span className="text-2xl font-semibold text-blue-500"onClick={()=>{navigate('/Goorm_PBL/6_react_mall')}}>Shop</span>
-
+                <span className="text-2xl font-bold text-green-800">Fredit</span>
                 <div className="flex justify-end">
+
                 </div>
             </div>
         </div>
     )
 }
 );
+
+export default Nav;

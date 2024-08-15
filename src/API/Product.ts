@@ -68,6 +68,13 @@ export const Product = createSlice({
       .addCase(inupsheet.rejected, (state, action: any) => {
         state.error = action.payload;
       })
+      .addCase(insheet.pending, (state) => {
+      })
+      .addCase(insheet.fulfilled, (state, action) => {
+      })
+      .addCase(insheet.rejected, (state, action: any) => {
+        state.error = action.payload;
+      })
   }
 });
 /*
@@ -117,6 +124,21 @@ export const inupsheet = createAsyncThunk(
       const resp = await instance.post(
         requests.insertAll,
         JSON.stringify(data.data)
+      );
+      return resp;
+    } catch (e) {
+      return undefined;
+    }
+  }
+)
+export const insheet = createAsyncThunk(
+  "insert",
+  async (data: any) => {
+    try {
+      console.log(data);
+      const resp = await instance.post(
+        requests.insert,
+        JSON.stringify(data)
       );
       return resp;
     } catch (e) {
