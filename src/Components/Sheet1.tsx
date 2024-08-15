@@ -1,7 +1,7 @@
-import { data, Getsheet, inp, inupsheet, setD } from "../API/Product";
+import { data, GetDATAsheet, Getsheet, inp, inupDATAsheet, inupsheet, setD } from "../API/Product";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../API/store";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import "../Asset/excel.css";
 
 const Sheet1: any = ((e: any) => {
@@ -11,20 +11,21 @@ const Sheet1: any = ((e: any) => {
 
 
 
-    
+
     const input1: inp = {
         p_id: 1,
         col: "quantity",
         data: "1",
     };
     useEffect(() => {
+        dispath(GetDATAsheet());
         dispath(Getsheet());
     }, [sheet.sheetnum]);
 
     let sum: number = 0;
     setting.data.map((data: any) => (
         sum += (Number(data.quantity) * Number(data.value))));
-    if (setting.data == undefined)
+    if (setting.odata.length === 0 || setting.data.length === 0)
         return <div>에러 페이지</div>;
     if (sheet.sheetnum == 1) {
         return (
@@ -100,8 +101,7 @@ const Sheet1: any = ((e: any) => {
             </div>
         );
     }
-    else if(sheet.sheetnum == 3)
-    {
+    else if (sheet.sheetnum == 3) {
         return (
             <div>
                 <table>
@@ -115,9 +115,9 @@ const Sheet1: any = ((e: any) => {
                     <tbody>
                         {
 
-                            setting.data.map((data: any) => (
+                            setting.odata.map((data: any) => (
                                 <tr key={data.p_id}>
-                                    <td><input onBlur={() => { dispath(inupsheet(setting)); }} value={data.p_name} onChange={(e: any) => {
+                                    <td><input onBlur={() => { dispath(inupDATAsheet(setting)); }} value={data.p_name} onChange={(e: any) => {
                                         const input: inp = {
                                             p_id: data.p_id,
                                             col: "p_name",
@@ -125,10 +125,18 @@ const Sheet1: any = ((e: any) => {
                                         };
                                         dispath(setD(input));
                                     }} /></td>
-                                    <td><input onBlur={() => { dispath(inupsheet(setting)); }} value={data.value} onChange={(e: any) => {
+                                    <td><input onBlur={() => { dispath(inupDATAsheet(setting)); }} value={data.value} onChange={(e: any) => {
                                         const input: inp = {
                                             p_id: data.p_id,
                                             col: "value",
+                                            data: e.target.value,
+                                        };
+                                        dispath(setD(input));
+                                    }} /></td>
+                                    <td><input onBlur={() => { dispath(inupDATAsheet(setting)); }} value={data.p_quantity} onChange={(e: any) => {
+                                        const input: inp = {
+                                            p_id: data.p_id,
+                                            col: "quantity",
                                             data: e.target.value,
                                         };
                                         dispath(setD(input));
