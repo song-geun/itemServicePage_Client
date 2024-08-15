@@ -1,12 +1,12 @@
 import Sheet1 from "../Components/Sheet1";
 
-const HOME: any = ((e: any) => {
+const Nav: any = ((e: any) => {
 
     return (
         <div>
-            <Sheet1/>
+           
         </div>
     );
 })
 
-export default HOME;
+export default Nav;
