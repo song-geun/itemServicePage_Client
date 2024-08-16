@@ -1,4 +1,4 @@
-import { data, GetDATAsheet, Getsheet, inp, inupDATAsheet, inupsheet, setD } from "../API/Product";
+import { data, GetDATAsheet, Getsheet, inp, insertsheet, insheet, inupDATAsheet, inupsheet, Pdata, setD, setinsertD } from "../API/Product";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../API/store";
 import { useEffect } from "react";
@@ -20,12 +20,46 @@ const Sheet1: any = ((e: any) => {
     useEffect(() => {
         dispath(GetDATAsheet());
         dispath(Getsheet());
-    }, [sheet.sheetnum]);
+    }, [sheet,setting.data]);
+    const handleSheet1Click = () => {
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = ('0' + (today.getMonth() + 1)).slice(-2);
+        const day = ('0' + today.getDate()).slice(-2);
+        const date = year + month + day;
+        const n = setting.data.length;
+        const arr = [];
+        for (let i = 0; i < n; i++) {
+            const d1: Pdata = {
+                prod_data_id: 0,
+                p_id: setting.data[i].p_id,
+                p_name: setting.data[i].p_name,
+                value: setting.data[i].value,
+                p_quantity: setting.data[i].quantity,
+                date: date
+            };
+            arr.push(d1);
+        }
+        console.log(arr);
+        dispath(insertsheet(arr));
+    }
+
+    const handleSheet2Click = () => {
+        dispath(insheet(setting.insertdata));
+    }
 
     let sum: number = 0;
     setting.data.map((data: any) => (
         sum += (Number(data.quantity) * Number(data.value))));
-    if (setting.odata.length === 0 || setting.data.length === 0)
+
+
+
+
+
+
+
+    if (setting.odata === undefined || setting.data === undefined)
         return <div>에러 페이지</div>;
     if (sheet.sheetnum == 1) {
         return (
@@ -56,9 +90,13 @@ const Sheet1: any = ((e: any) => {
                                 </tr>
                             ))
                         }
+                        <tr>
+                            <td className="text-2xl font-bold" onClick={(e) => { handleSheet1Click()}}>입력</td>
+                            <td className="text-2xl font-bold">합계</td>
+                            <td>{sum}</td>
+                        </tr>
                     </tbody>
                 </table>
-                <div>{sum}</div>
             </div>
         );
     }
@@ -98,6 +136,36 @@ const Sheet1: any = ((e: any) => {
                         }
                     </tbody>
                 </table>
+                <button>추가</button>
+                <div >
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="unused">이름</th>
+                                <th className="unused">가격</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td><input value={setting.insertdata.p_name} onChange={(e: any) => {
+                                const input: inp = {
+                                    p_id : 0,
+                                    col: "p_name",
+                                    data: e.target.value,
+                                };
+                                dispath(setinsertD(input));
+                            }}/ ></td>
+                            <td><input value={setting.insertdata.value} onChange={(e : any) =>{
+                                const input: inp = {
+                                    p_id : 0,
+                                    col: "value",
+                                    data: e.target.value,
+                                };
+                                dispath(setinsertD(input));
+                            }}/ ></td>
+                        </tbody>
+                    </table>
+                    <button onClick={handleSheet2Click}>push</button>
+                </div>
             </div>
         );
     }
@@ -110,6 +178,7 @@ const Sheet1: any = ((e: any) => {
                             <th className="unused">이름</th>
                             <th className="unused">가격</th>
                             <th className="unused">수량</th>
+                            <th className="unused">날짜</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -117,30 +186,10 @@ const Sheet1: any = ((e: any) => {
 
                             setting.odata.map((data: any) => (
                                 <tr key={data.p_id}>
-                                    <td><input onBlur={() => { dispath(inupDATAsheet(setting)); }} value={data.p_name} onChange={(e: any) => {
-                                        const input: inp = {
-                                            p_id: data.p_id,
-                                            col: "p_name",
-                                            data: e.target.value,
-                                        };
-                                        dispath(setD(input));
-                                    }} /></td>
-                                    <td><input onBlur={() => { dispath(inupDATAsheet(setting)); }} value={data.value} onChange={(e: any) => {
-                                        const input: inp = {
-                                            p_id: data.p_id,
-                                            col: "value",
-                                            data: e.target.value,
-                                        };
-                                        dispath(setD(input));
-                                    }} /></td>
-                                    <td><input onBlur={() => { dispath(inupDATAsheet(setting)); }} value={data.p_quantity} onChange={(e: any) => {
-                                        const input: inp = {
-                                            p_id: data.p_id,
-                                            col: "quantity",
-                                            data: e.target.value,
-                                        };
-                                        dispath(setD(input));
-                                    }} /></td>
+                                    <td>{data.p_name}</td>
+                                    <td>{data.value}</td>
+                                    <td>{data.p_quantity}</td>
+                                    <td>{data.date}</td>
                                 </tr>
                             ))
                         }
@@ -152,3 +201,7 @@ const Sheet1: any = ((e: any) => {
 })
 
 export default Sheet1;
+
+function DATEoDATA(date: string): any {
+    throw new Error("Function not implemented.");
+}

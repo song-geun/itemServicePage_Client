@@ -21,7 +21,7 @@ export interface Pdata {
   p_name: string
   value: number
   p_quantity: number
-  DATE: string
+  date: string
 }
 const Pdata = {
   prod_data_id: undefined,
@@ -29,7 +29,7 @@ const Pdata = {
   p_name: undefined,
   value: undefined,
   p_quantity: undefined,
-  DATE: undefined,
+  date: undefined,
 }
 
 export interface DATAinp {
@@ -45,6 +45,7 @@ export interface inp {
 export interface Product {
   data: any
   odata: any
+  insertdata : any
   isLoading: any
   error: any
 }
@@ -52,6 +53,7 @@ export interface Product {
 const initialState: Product = {
   data: [],
   odata: [],
+  insertdata : data,
   isLoading: undefined,
   error: undefined,
 };
@@ -90,6 +92,14 @@ export const Product = createSlice({
         }
       }
     },
+    setinsertD: (state, action : PayloadAction<inp>) =>{
+      state.insertdata.p_id = 0;
+      if (action.payload.col == "p_name")
+        state.insertdata.p_name = action.payload.data;
+      if (action.payload.col == "value")
+        state.insertdata.value = Number(action.payload.data);
+      state.insertdata.quantity = 0;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -198,12 +208,15 @@ export const inupDATAsheet = createAsyncThunk(
       }
   }
 )
+
+
+
 export const insertsheet = createAsyncThunk(
   "Datainsert",
   async (data: any) => {
       try {
           const resp = await instance.post(
-              requests.Datainsert,
+              requests.DatainsertAll,
               JSON.stringify(data)
           );
           return resp;
@@ -258,6 +271,7 @@ export const insheet = createAsyncThunk(
 
 export const {
   setD,
-  DATAsetD
+  DATAsetD,
+  setinsertD
 } = Product.actions;
 export default Product.reducer;
