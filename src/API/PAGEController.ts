@@ -16,8 +16,8 @@ export const PAGEController = createSlice({
       setSheet: (state, action: PayloadAction<any>) => {
         state.sheetnum = action.payload;
       },
-      setSheet2input: (state, action: PayloadAction<any>) => {
-        state.sheet2input = !state.sheet2input;
+      setSheet2input: (state, action: PayloadAction<boolean>) => {
+        state.sheet2input = !action.payload;
       },
     },
 }
