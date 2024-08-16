@@ -54,7 +54,7 @@ const initialState: Product = {
   data: [],
   odata: [],
   insertdata : data,
-  isLoading: undefined,
+  isLoading: false,
   error: undefined,
 };
 
@@ -99,58 +99,82 @@ export const Product = createSlice({
       if (action.payload.col == "value")
         state.insertdata.value = Number(action.payload.data);
       state.insertdata.quantity = 0;
+    },
+    initinsertD: (state, action : PayloadAction<any>) =>{
+      state.insertdata.p_id = 0;
+      state.insertdata.p_name = "";
+      state.insertdata.value = 0;
+      state.insertdata.quantity = 0;
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(Getsheet.pending, (state) => {
+        state.isLoading = false;
       })
       .addCase(Getsheet.fulfilled, (state, action) => {
         state.data = action.payload.data;
+        state.isLoading = true;
       })
       .addCase(Getsheet.rejected, (state, action: any) => {
         state.error = action.payload;
+        state.isLoading = false;
       })
 
       .addCase(inupsheet.pending, (state) => {
+        state.isLoading = false;
       })
       .addCase(inupsheet.fulfilled, (state, action) => {
+        state.isLoading = true;
       })
       .addCase(inupsheet.rejected, (state, action: any) => {
         state.error = action.payload;
+        state.isLoading = true;
       })
 
       .addCase(insheet.pending, (state) => {
+        state.isLoading = false;
       })
       .addCase(insheet.fulfilled, (state, action) => {
+        state.isLoading = true;
       })
       .addCase(insheet.rejected, (state, action: any) => {
         state.error = action.payload;
+        state.isLoading = true;
       })
 
       .addCase(GetDATAsheet.pending, (state) => {
+        state.isLoading = false;
       })
       .addCase(GetDATAsheet.fulfilled, (state, action) => {
           state.odata = action.payload.data;
+          state.isLoading = true;
       })
       .addCase(GetDATAsheet.rejected, (state, action: any) => {
           state.error = action.payload;
+          state.isLoading = true;
       })
 
       .addCase(inupDATAsheet.pending, (state) => {
+        state.isLoading = false;
       })
       .addCase(inupDATAsheet.fulfilled, (state, action) => {
+        state.isLoading = true;
       })
       .addCase(inupDATAsheet.rejected, (state, action: any) => {
           state.error = action.payload;
+          state.isLoading = true;
       })
 
       .addCase(insertsheet.pending, (state) => {
+        state.isLoading = false;
       })
       .addCase(insertsheet.fulfilled, (state, action) => {
+        state.isLoading = true;
       })
       .addCase(insertsheet.rejected, (state, action: any) => {
           state.error = action.payload;
+          state.isLoading = true;
       })
   }
 });
@@ -272,6 +296,7 @@ export const insheet = createAsyncThunk(
 export const {
   setD,
   DATAsetD,
-  setinsertD
+  setinsertD,
+  initinsertD
 } = Product.actions;
 export default Product.reducer;

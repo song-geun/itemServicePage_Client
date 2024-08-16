@@ -1,8 +1,10 @@
-import { data, GetDATAsheet, Getsheet, inp, insertsheet, insheet, inupDATAsheet, inupsheet, Pdata, setD, setinsertD } from "../API/Product";
+import { data, GetDATAsheet, Getsheet, initinsertD, inp, insertsheet, insheet, inupDATAsheet, inupsheet, Pdata, setD, setinsertD } from "../API/Product";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../API/store";
 import { useEffect } from "react";
 import "../Asset/excel.css";
+import { setSheet } from "../API/PAGEController";
+import { Await } from "react-router-dom";
 
 const Sheet1: any = ((e: any) => {
     const dispath = useDispatch<AppDispatch>();
@@ -20,7 +22,7 @@ const Sheet1: any = ((e: any) => {
     useEffect(() => {
         dispath(GetDATAsheet());
         dispath(Getsheet());
-    }, [sheet,setting.data]);
+    }, [sheet]);
     const handleSheet1Click = () => {
         const today = new Date();
 
@@ -45,8 +47,10 @@ const Sheet1: any = ((e: any) => {
         dispath(insertsheet(arr));
     }
 
-    const handleSheet2Click = () => {
-        dispath(insheet(setting.insertdata));
+    const handleSheet2Click = async () => {
+        await dispath(insheet(setting.insertdata));
+        dispath(setSheet(1));
+        dispath(initinsertD(1));
     }
 
     let sum: number = 0;
@@ -91,9 +95,9 @@ const Sheet1: any = ((e: any) => {
                             ))
                         }
                         <tr>
-                            <td className="text-2xl font-bold" onClick={(e) => { handleSheet1Click()}}>입력</td>
-                            <td className="text-2xl font-bold">합계</td>
-                            <td>{sum}</td>
+                            <td className="text-2xl font-bold text-green-800" onClick={(e) => { handleSheet1Click()}}>입력</td>
+                            <td className="text-2xl font-bold text-right">총 합산 :</td>
+                            <td className="text-2xl font-bold text-left">{sum}</td>
                         </tr>
                     </tbody>
                 </table>
