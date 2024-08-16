@@ -95,7 +95,7 @@ const Sheet1: any = ((e: any) => {
                             ))
                         }
                         <tr>
-                            <td className="text-2xl font-bold text-green-700" onClick={(e) => { handleSheet1Click()}}>입력</td>
+                            <td><button className="text-2xl font-bold text-green-700" onClick={(e) => { handleSheet1Click()}}>입력</button></td>
                             <td className="text-2xl font-bold text-right">총 합산 :</td>
                             <td className="text-2xl font-bold text-left">{sum}</td>
                         </tr>
