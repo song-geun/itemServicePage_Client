@@ -176,6 +176,19 @@ export const Product = createSlice({
           state.error = action.payload;
           state.isLoading = true;
       })
+      
+
+      
+      .addCase(deletedata.pending, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(deletedata.fulfilled, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deletedata.rejected, (state, action: any) => {
+          state.error = action.payload;
+          state.isLoading = true;
+      })
   }
 });
 /*
@@ -292,6 +305,22 @@ export const insheet = createAsyncThunk(
     }
   }
 )
+export const deletedata = createAsyncThunk(
+  "delete",
+  async (data: any) => {
+    try {
+      const resp = await instance.post(
+        requests.delete,
+        JSON.stringify(data)
+      );
+      return resp;
+    } catch (e) {
+      return undefined;
+    }
+  }
+)
+
+
 
 export const {
   setD,

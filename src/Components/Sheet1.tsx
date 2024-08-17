@@ -1,4 +1,4 @@
-import { data, GetDATAsheet, Getsheet, initinsertD, inp, insertsheet, insheet, inupDATAsheet, inupsheet, Pdata, setD, setinsertD } from "../API/Product";
+import { data, deletedata, GetDATAsheet, Getsheet, initinsertD, inp, insertsheet, insheet, inupDATAsheet, inupsheet, Pdata, setD, setinsertD } from "../API/Product";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../API/store";
 import { useEffect } from "react";
@@ -50,6 +50,17 @@ const Sheet1: any = ((e: any) => {
     const handleSheet2Click = async () => {
         await dispath(insheet(setting.insertdata));
         dispath(initinsertD(1));
+        await dispath(Getsheet());
+    }
+
+    const handledelete = async (data : any) => {
+        const input : data = {
+            p_id : data,
+            value : 0,
+            quantity : 0,
+            p_name : ""
+        }
+        await dispath(deletedata(input));
         await dispath(Getsheet());
     }
 
@@ -119,7 +130,9 @@ const Sheet1: any = ((e: any) => {
 
                             setting.data.map((data: any) => (
                                 <tr key={data.p_id}>
-                                    <td><input onBlur={() => { dispath(inupsheet(setting)); }} value={data.p_name} onChange={(e: any) => {
+                                    <td>
+                                        <button onClick={()=>{handledelete(data.p_id);}}>X</button>
+                                        <input onBlur={() => { dispath(inupsheet(setting)); }} value={data.p_name} onChange={(e: any) => {
                                         const input: inp = {
                                             p_id: data.p_id,
                                             col: "p_name",
@@ -145,8 +158,8 @@ const Sheet1: any = ((e: any) => {
                     <table>
                         <thead>
                             <tr>
-                                <th className="unused">이름</th>
-                                <th className="unused">가격</th>
+                                <th className="unused">추가할 항목 이름</th>
+                                <th className="unused">추가할 항목 가격</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -2,6 +2,7 @@ const requests: {
     list: string
     insertAll: string
     insert : string
+    delete : string
 
     Datalist : string
     DatainsertAll : string
@@ -10,6 +11,7 @@ const requests: {
     list: "Product/list",
     insertAll: "Product/insertAll",
     insert : "Product/insert",
+    delete : "Product/Delete",
 
     Datalist : "ProductData/list",
     DatainsertAll : "ProductData/insertAll",
