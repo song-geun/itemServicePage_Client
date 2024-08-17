@@ -9,7 +9,7 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const Sheet4 : any = ((e:any)=>{
+const Sheet4: any = ((e: any) => {
     const dispath = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.Product);
     const [value, onChange] = useState<Value>(new Date());
@@ -37,34 +37,36 @@ const Sheet4 : any = ((e:any)=>{
 
     return (
         <div>
+            <div className="flex justify-center">
                 <Calendar onChange={async (e: any) => { await onChange(e); await ChangeMONTH(e) }} value={value} />
-                <table>
-                    <thead>
-                        <tr>
-                            <th className="unused">이름</th>
-                            <th className="unused">가격</th>
-                            <th className="unused">수량</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-
-                            setting.Mdata.map((data: any) => (
-                                <tr key={data.p_id}>
-                                    <td>{data.p_name}</td>
-                                    <td>{data.value}</td>
-                                    <td>{data.p_quantity}</td>
-                                </tr>
-                            ))
-                        }
-                        <tr>
-                            <td></td>
-                            <td className="text-2xl font-bold text-right">총 합산 :</td>
-                            <td className="text-2xl font-bold text-left">{summonth}</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th className="unused">이름</th>
+                        <th className="unused">가격</th>
+                        <th className="unused">수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+
+                        setting.Mdata.map((data: any) => (
+                            <tr key={data.p_id}>
+                                <td>{data.p_name}</td>
+                                <td>{data.value}</td>
+                                <td>{data.p_quantity}</td>
+                            </tr>
+                        ))
+                    }
+                    <tr>
+                        <td></td>
+                        <td className="text-2xl font-bold text-right">총 합산 :</td>
+                        <td className="text-2xl font-bold text-left">{summonth}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     );
 })
 

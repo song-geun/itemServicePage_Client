@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../API/store";
 import { initD, inp, insertsheet, inupsheet, Pdata, setD } from "../API/Product";
 
-const Sheet1 : any =((e:any) =>{
+const Sheet1: any = ((e: any) => {
     const dispath = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.Product);
     const sheet: any = useSelector((state: RootState) => state.PAGEController);
-    
+
     const input1: inp = {
         p_id: 1,
         col: "quantity",
@@ -47,40 +47,40 @@ const Sheet1 : any =((e:any) =>{
 
     return (
         <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th className="unused">이름</th>
-                            <th className="unused">가격</th>
-                            <th className="unused">수량</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
+            <table>
+                <thead>
+                    <tr>
+                        <th className="unused">이름</th>
+                        <th className="unused">가격</th>
+                        <th className="unused">수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
 
-                            setting.data.map((data: any) => (
-                                <tr key={data.p_id}>
-                                    <td>{data.p_name}</td>
-                                    <td>{data.value}</td>
-                                    <td><input onBlur={() => { dispath(inupsheet(setting)); }} value={data.quantity} onChange={(e: any) => {
-                                        const input: inp = {
-                                            p_id: data.p_id,
-                                            col: "quantity",
-                                            data: e.target.value,
-                                        };
-                                        dispath(setD(input));
-                                    }} /></td>
-                                </tr>
-                            ))
-                        }
-                        <tr>
-                            <td><button className="text-2xl font-bold text-green-700" onClick={(e) => { handleSheet1Click() }}>입력</button></td>
-                            <td className="text-2xl font-bold text-right"><button onClick={(e) => { handleSheet1init() }}>초기화</button>총 합산 :</td>
-                            <td className="text-2xl font-bold text-left">{sum}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                        setting.data.map((data: any) => (
+                            <tr key={data.p_id}>
+                                <td>{data.p_name}</td>
+                                <td>{data.value}</td>
+                                <td><input onBlur={() => { dispath(inupsheet(setting)); }} value={data.quantity} onChange={(e: any) => {
+                                    const input: inp = {
+                                        p_id: data.p_id,
+                                        col: "quantity",
+                                        data: e.target.value,
+                                    };
+                                    dispath(setD(input));
+                                }} /></td>
+                            </tr>
+                        ))
+                    }
+                    <tr>
+                        <td><button className="text-2xl font-bold text-green-700" onClick={(e) => { handleSheet1Click() }}>제출</button></td>
+                        <td className="text-2xl font-bold text-right"><button className="text-green-700" onClick={(e) => { handleSheet1init() }}>초기화  </button>  총 합산 :</td>
+                        <td className="text-2xl font-bold text-left">{sum}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     );
 })
 
