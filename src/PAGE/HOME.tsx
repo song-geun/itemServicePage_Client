@@ -1,4 +1,4 @@
-import Sheet1 from "../Components/Sheet1";
+import Sheet1 from "../Components/Main";
 
 const HOME: any = ((e: any) => {
 

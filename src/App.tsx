@@ -9,7 +9,6 @@ import Menu from './Components/Menu';
 function App() {
   return (
     <div className='App'>
-      <Nav />
       <Routes>
         <Route>
           <Route index element={<Menu />} />
