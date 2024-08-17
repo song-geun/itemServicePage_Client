@@ -21,7 +21,10 @@ const Menu: any = ((e: any) => {
                         수정
                     </div>
                     <div className="  flex px-4 py-4 mr-2 bg-white border-gray-500 border-1 hover:bg-gray-600 hover:text-white shadow-lg font-semibold text-lg rounded-md" onClick={()=>{dispath(setSheet(3));}}>
-                        조회
+                        일 조회
+                    </div>
+                    <div className="  flex px-4 py-4 mr-2 bg-white border-gray-500 border-1 hover:bg-gray-600 hover:text-white shadow-lg font-semibold text-lg rounded-md" onClick={()=>{dispath(setSheet(4));}}>
+                        월 조회
                     </div>
                 </div>
             </div>

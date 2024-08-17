@@ -5,8 +5,10 @@ const requests: {
     delete : string
 
     Datalist : string
+    DataDATElist : string
     DatainsertAll : string
     Datainsert : string
+    DataMonth : string
 } = {
     list: "Product/list",
     insertAll: "Product/insertAll",
@@ -14,8 +16,10 @@ const requests: {
     delete : "Product/Delete",
 
     Datalist : "ProductData/list",
+    DataDATElist : "ProductData/datelist",
     DatainsertAll : "ProductData/insertAll",
     Datainsert : "ProductData/insert",
+    DataMonth : "ProductData/monthlist"
 }
 
 export default requests;

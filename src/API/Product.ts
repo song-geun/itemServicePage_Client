@@ -45,6 +45,7 @@ export interface inp {
 export interface Product {
   data: any
   odata: any
+  Mdata : any
   insertdata : any
   isLoading: any
   error: any
@@ -53,6 +54,7 @@ export interface Product {
 const initialState: Product = {
   data: [],
   odata: [],
+  Mdata : [],
   insertdata : data,
   isLoading: false,
   error: undefined,
@@ -90,6 +92,12 @@ export const Product = createSlice({
           if (action.payload.col == "quantity")
             state.data[i].quantity = Number(action.payload.data);
         }
+      }
+    },
+    initD: (state) =>{
+      const n = state.data.length;
+      for (let i = 0; i < n; i++) {
+        state.data[i].quantity = 0;
       }
     },
     setinsertD: (state, action : PayloadAction<inp>) =>{
@@ -155,6 +163,31 @@ export const Product = createSlice({
           state.isLoading = true;
       })
 
+
+      .addCase(GetDATADATEsheet.pending, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(GetDATADATEsheet.fulfilled, (state, action) => {
+          state.odata = action.payload.data;
+          state.isLoading = true;
+      })
+      .addCase(GetDATADATEsheet.rejected, (state, action: any) => {
+          state.error = action.payload;
+          state.isLoading = true;
+      })
+
+      .addCase(GetDATAMONTHsheet.pending, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(GetDATAMONTHsheet.fulfilled, (state, action) => {
+          state.Mdata = action.payload.data;
+          state.isLoading = true;
+      })
+      .addCase(GetDATAMONTHsheet.rejected, (state, action: any) => {
+          state.error = action.payload;
+          state.isLoading = true;
+      })
+
       .addCase(inupDATAsheet.pending, (state) => {
         state.isLoading = false;
       })
@@ -189,6 +222,9 @@ export const Product = createSlice({
           state.error = action.payload;
           state.isLoading = true;
       })
+
+
+
   }
 });
 /*
@@ -231,6 +267,30 @@ export const GetDATAsheet = createAsyncThunk(
       }
   }
 );
+export const GetDATADATEsheet = createAsyncThunk(
+  "DataDATElist",
+  async (Data:any) => {
+      try {
+          const resp = await instance.post(requests.DataDATElist, JSON.stringify(Data));
+          return resp;
+      } catch (e) {
+          return undefined;
+      }
+  }
+);
+
+export const GetDATAMONTHsheet = createAsyncThunk(
+  "DataMONTHlist",
+  async (Data:any) => {
+      try {
+          const resp = await instance.post(requests.DataMonth, JSON.stringify(Data));
+          return resp;
+      } catch (e) {
+          return undefined;
+      }
+  }
+);
+
 export const inupDATAsheet = createAsyncThunk(
   "DatainsertAll",
   async (data: any) => {
@@ -320,12 +380,11 @@ export const deletedata = createAsyncThunk(
   }
 )
 
-
-
 export const {
   setD,
   DATAsetD,
   setinsertD,
-  initinsertD
+  initinsertD,
+  initD
 } = Product.actions;
 export default Product.reducer;
