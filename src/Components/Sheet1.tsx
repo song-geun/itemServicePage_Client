@@ -42,7 +42,7 @@ const Sheet1: any = ((e: any) => {
                 p_name: setting.data[i].p_name,
                 value: setting.data[i].value,
                 p_quantity: setting.data[i].quantity,
-                date: date
+                date: date  //긴급변경
             };
             arr.push(d1);
         }
