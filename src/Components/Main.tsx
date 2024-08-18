@@ -11,13 +11,13 @@ import Sheet4 from "./Sheet4";
 import Sheet5 from "./Sheet5";
 
 
+
 const Main: any = ((e: any) => {
     const dispath = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.Product);
     const sheet: any = useSelector((state: RootState) => state.PAGEController);
     
     useEffect(() => {
-        //dispath(GetDATAsheet());
         dispath(Getsheet());
     }, [sheet]);
     

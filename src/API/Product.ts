@@ -142,6 +142,18 @@ export const Product = createSlice({
         state.isLoading = true;
       })
 
+      .addCase(initinupsheet.pending, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(initinupsheet.fulfilled, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(initinupsheet.rejected, (state, action: any) => {
+        state.error = action.payload;
+        state.isLoading = true;
+      })
+
+
       .addCase(insheet.pending, (state) => {
         state.isLoading = false;
       })
@@ -365,7 +377,6 @@ export const inupsheet = createAsyncThunk(
   "insertAll",
   async (data: any) => {
     try {
-      console.log(data.data);
       const resp = await instance.post(
         requests.insertAll,
         JSON.stringify(data.data)
@@ -376,6 +387,23 @@ export const inupsheet = createAsyncThunk(
     }
   }
 )
+
+export const initinupsheet = createAsyncThunk(
+  "initinsertAll",
+  async (data: any) => {
+
+    try {
+      const resp = await instance.post(
+        requests.insertAll,
+        JSON.stringify(data)
+      );
+      return resp;
+    } catch (e) {
+      return undefined;
+    }
+  }
+)
+
 export const insheet = createAsyncThunk(
   "insert",
   async (data: any) => {
