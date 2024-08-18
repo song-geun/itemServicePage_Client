@@ -1,13 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../API/store";
 import { initD, inp, insertsheet, inupsheet, Pdata, setD } from "../API/Product";
-import { setSheet1key } from "../API/PAGEController";
-import { useEffect } from "react";
+import { setSheet1key, setSheet3input } from "../API/PAGEController";
+import { useEffect, useState } from "react";
+import Calendar from "react-calendar";
+
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const Sheet1: any = ((e: any) => {
     const dispath = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.Product);
     const sheet: any = useSelector((state: RootState) => state.PAGEController);
+
+    const [value, onChange] = useState<Value>(new Date());
 
     useEffect(() => {
         //dispath(GetDATAsheet());
@@ -18,7 +25,21 @@ const Sheet1: any = ((e: any) => {
         col: "quantity",
         data: "1",
     };
-
+    const ChangeSheet1 = async (data:any) =>{
+        const year = data.getFullYear();
+        const month = ('0' + (data.getMonth() + 1)).slice(-2);
+        const day = ('0' + data.getDate()).slice(-2);
+        const date = year + month + day;
+        const input: Pdata = {
+            prod_data_id: 0,
+            p_id: 0,
+            p_name: "",
+            value: 0,
+            p_quantity: 0,
+            date: date,
+        }
+        await dispath(setSheet3input(date));
+    }
     const handleSheet1Click = () => {
         const today = new Date();
 
@@ -35,11 +56,10 @@ const Sheet1: any = ((e: any) => {
                 p_name: setting.data[i].p_name,
                 value: setting.data[i].value,
                 p_quantity: setting.data[i].quantity,
-                date: date  //긴급변경
+                date: sheet.DATE  //긴급변경
             };
             arr.push(d1);
         }
-        console.log(arr);
         dispath(insertsheet(arr));
     }
 
@@ -53,6 +73,9 @@ const Sheet1: any = ((e: any) => {
     console.log(sheet.sheet1key);
     return (
         <div>
+             <div className="flex justify-center">
+                <Calendar onChange={async (e: any) => { await onChange(e); await ChangeSheet1(e)}} value={value} />
+            </div>
             <table>
                 <thead>
                     <tr>
