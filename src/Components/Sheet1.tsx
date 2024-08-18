@@ -1,11 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../API/store";
 import { initD, inp, insertsheet, inupsheet, Pdata, setD } from "../API/Product";
+import { setSheet1key } from "../API/PAGEController";
+import { useEffect } from "react";
 
 const Sheet1: any = ((e: any) => {
     const dispath = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.Product);
     const sheet: any = useSelector((state: RootState) => state.PAGEController);
+
+    useEffect(() => {
+        //dispath(GetDATAsheet());
+    }, [sheet]);
 
     const input1: inp = {
         p_id: 1,
@@ -44,7 +50,7 @@ const Sheet1: any = ((e: any) => {
     let sum: number = 0;
     setting.data.map((data: any) => (
         sum += (Number(data.quantity) * Number(data.value))));
-
+    console.log(sheet.sheet1key);
     return (
         <div>
             <table>
@@ -59,10 +65,10 @@ const Sheet1: any = ((e: any) => {
                     {
 
                         setting.data.map((data: any) => (
-                            <tr key={data.p_id}>
+                            <tr className={((sheet.sheet1key == data.p_id) ? "bg-blue-400" : "bg-stone-50" )} key={data.p_id}>
                                 <td>{data.p_name}</td>
                                 <td>{data.value}</td>
-                                <td><input onBlur={() => { dispath(inupsheet(setting)); }} value={data.quantity} onChange={(e: any) => {
+                                <td><input onFocus={() => {dispath(setSheet1key(data.p_id));}} onBlur={() => {dispath(setSheet1key(-1)); dispath(inupsheet(setting));  }} value={data.quantity} onChange={(e: any) => {
                                     const input: inp = {
                                         p_id: data.p_id,
                                         col: "quantity",

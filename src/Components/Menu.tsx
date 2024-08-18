@@ -7,7 +7,6 @@ import Main from './Main';
 
 const Menu: any = ((e: any) => {
     const dispath = useDispatch<AppDispatch>();
-    let sheet = 0;
     return (
         <div>
             <div >
@@ -25,6 +24,9 @@ const Menu: any = ((e: any) => {
                     </div>
                     <div className="  flex px-4 py-4 mr-2 bg-white border-gray-500 border-1 hover:bg-gray-600 hover:text-white shadow-lg font-semibold text-lg rounded-md" onClick={() => { dispath(setSheet(4)); }}>
                         월 조회
+                    </div>
+                    <div className="  flex px-4 py-4 mr-2 bg-white border-gray-500 border-1 hover:bg-gray-600 hover:text-white shadow-lg font-semibold text-lg rounded-md" onClick={() => { dispath(setSheet(5)); }}>
+                        기간 조회
                     </div>
                 </div>
             </div>

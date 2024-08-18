@@ -8,6 +8,7 @@ import Sheet1 from "./Sheet1";
 import Sheet2 from "./Sheet2";
 import Sheet3 from "./Sheet3";
 import Sheet4 from "./Sheet4";
+import Sheet5 from "./Sheet5";
 
 
 const Main: any = ((e: any) => {
@@ -41,6 +42,11 @@ const Main: any = ((e: any) => {
     else if (sheet.sheetnum == 4) {
         return (
             <Sheet4 />
+        );
+    }
+    else if (sheet.sheetnum == 5) {
+        return (
+            <Sheet5 />
         );
     }
 })

@@ -9,6 +9,7 @@ const requests: {
     DatainsertAll : string
     Datainsert : string
     DataMonth : string
+    DataPeriod : string
 } = {
     list: "Product/list",
     insertAll: "Product/insertAll",
@@ -19,7 +20,8 @@ const requests: {
     DataDATElist : "ProductData/datelist",
     DatainsertAll : "ProductData/insertAll",
     Datainsert : "ProductData/insert",
-    DataMonth : "ProductData/monthlist"
+    DataMonth : "ProductData/monthlist",
+    DataPeriod : "ProductData/periodlist"
 }
 
 export default requests;

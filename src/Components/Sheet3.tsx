@@ -41,6 +41,7 @@ const Sheet3: any = ((e: any) => {
             <div className="flex justify-center">
                 <Calendar onChange={async (e: any) => { await onChange(e); await ChangeDATE(e) }} value={value} />
             </div>
+            <br/>
             <table>
                 <thead>
                     <tr>

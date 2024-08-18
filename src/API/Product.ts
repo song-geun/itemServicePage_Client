@@ -46,6 +46,7 @@ export interface Product {
   data: any
   odata: any
   Mdata : any
+  Pedata : any
   insertdata : any
   isLoading: any
   error: any
@@ -55,6 +56,7 @@ const initialState: Product = {
   data: [],
   odata: [],
   Mdata : [],
+  Pedata : [],
   insertdata : data,
   isLoading: false,
   error: undefined,
@@ -188,6 +190,18 @@ export const Product = createSlice({
           state.isLoading = true;
       })
 
+      .addCase(GetDATAPeriodsheet.pending, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(GetDATAPeriodsheet.fulfilled, (state, action) => {
+          state.Pedata = action.payload.data;
+          state.isLoading = true;
+      })
+      .addCase(GetDATAPeriodsheet.rejected, (state, action: any) => {
+          state.error = action.payload;
+          state.isLoading = true;
+      })
+
       .addCase(inupDATAsheet.pending, (state) => {
         state.isLoading = false;
       })
@@ -284,6 +298,18 @@ export const GetDATAMONTHsheet = createAsyncThunk(
   async (Data:any) => {
       try {
           const resp = await instance.post(requests.DataMonth, JSON.stringify(Data));
+          return resp;
+      } catch (e) {
+          return undefined;
+      }
+  }
+);
+
+export const GetDATAPeriodsheet = createAsyncThunk(
+  "GetDATAPeriodsheet",
+  async (Data:any) => {
+      try {
+          const resp = await instance.post(requests.DataPeriod, JSON.stringify(Data));
           return resp;
       } catch (e) {
           return undefined;
