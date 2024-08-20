@@ -5,38 +5,11 @@ import { setSheet1key, setSheet3input } from "../API/PAGEController";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 
-type ValuePiece = Date | null;
-
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
-const Sheet1: any = ((e: any) => {
+const Sheet0: any = ((e: any) => {
     const dispath = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.Product);
     const sheet: any = useSelector((state: RootState) => state.PAGEController);
 
-    const [value, onChange] = useState<Value>(new Date());
-    useEffect(() => {
-    }, [sheet]);
-    const input1: inp = {
-        p_id: 1,
-        col: "quantity",
-        data: "1",
-    };
-    const ChangeSheet1 = async (data: any) => {
-        const year = data.getFullYear();
-        const month = ('0' + (data.getMonth() + 1)).slice(-2);
-        const day = ('0' + data.getDate()).slice(-2);
-        const date = year + month + day;
-        const input: Pdata = {
-            prod_data_id: 0,
-            p_id: 0,
-            p_name: "",
-            value: 0,
-            p_quantity: 0,
-            date: date,
-        }
-        await dispath(setSheet3input(date));
-    }
     const handleSheet1Click = () => {
         const today = new Date();
 
@@ -53,7 +26,7 @@ const Sheet1: any = ((e: any) => {
                 p_name: setting.data[i].p_name,
                 value: setting.data[i].value,
                 p_quantity: setting.data[i].quantity,
-                date: sheet.DATE//date : 기본  ,sheet.DATE  //긴급변경
+                date: date//date : 기본  ,sheet.DATE  //긴급변경
             };
             arr.push(d1);
         }
@@ -81,9 +54,6 @@ const Sheet1: any = ((e: any) => {
         sum += (Number(data.quantity) * Number(data.value))));
     return (
         <div>
-            <div className="flex justify-center">
-                <Calendar onChange={async (e: any) => { await onChange(e); await ChangeSheet1(e) }} value={value} />
-            </div>
             <table>
                 <thead>
                     <tr>
@@ -121,4 +91,4 @@ const Sheet1: any = ((e: any) => {
     );
 })
 
-export default Sheet1;
+export default Sheet0;

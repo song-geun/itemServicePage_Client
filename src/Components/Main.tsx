@@ -9,6 +9,7 @@ import Sheet2 from "./Sheet2";
 import Sheet3 from "./Sheet3";
 import Sheet4 from "./Sheet4";
 import Sheet5 from "./Sheet5";
+import Sheet0 from "./Sheet0";
 
 
 
@@ -23,6 +24,11 @@ const Main: any = ((e: any) => {
     
     if (setting.odata === undefined || setting.data === undefined)
         return <div>에러 페이지</div>;
+    if (sheet.sheetnum == 0) {
+        return (
+            <Sheet0 />
+        );
+    }
     if (sheet.sheetnum == 1) {
         return (
             <Sheet1 />
