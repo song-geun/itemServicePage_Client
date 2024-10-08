@@ -20,7 +20,7 @@ const Main: any = ((e: any) => {
     
     useEffect(() => {
         dispath(Getsheet());
-    }, [sheet]);
+    }, []);
     
     if (setting.odata === undefined || setting.data === undefined)
         return <div>에러 페이지</div>;

@@ -1,14 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../API/store";
-import { data, deletedata, Getsheet, initinsertD, inp, insheet, inupsheet, setD, setinsertD } from "../API/Product";
+import { AsetD, data, deletedata, Getsheet, initinsertD, inp, insheet, inupsheet, setD, setinsertD } from "../API/Product";
 import { setSheet2input } from "../API/PAGEController";
 
 const Sheet2: any = ((e: any) => {
     const dispath = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.Product);
     const sheet: any = useSelector((state: RootState) => state.PAGEController);
-
-
+    let dragStart = -1;
+    let dragEnd = -1;
+    let odata : data;
+    let cdata : data;
     let suml: number = 0;
     setting.odata.map((data: any) => (
         suml += (Number(data.p_quantity) * Number(data.value))));
@@ -29,7 +31,6 @@ const Sheet2: any = ((e: any) => {
         await dispath(deletedata(input));
         await dispath(Getsheet());
     }
-
     return (
         <div>
             <table>
@@ -41,12 +42,49 @@ const Sheet2: any = ((e: any) => {
                 </thead>
                 <tbody>
                     {
-
                         setting.data.map((data: any) => (
-                            <tr key={data.p_id}>
+                            <tr 
+                            draggable
+                            onDragStart = {async (e)=>{
+                                odata = data;
+                                cdata = data;
+                            }} 
+                            onDragOver = {async ()=>{
+                                cdata = data;
+                            }}
+                            onDragEndCapture ={async (e)=>{
+                                const input4: inp = {
+                                    p_id: odata.p_id,
+                                    col: "p_name",
+                                    data: cdata.p_name,
+                                };
+                                const input5: inp = {
+                                    p_id: odata.p_id,
+                                    col: "value",
+                                    data: cdata.value.toString(),
+                                };
+                                const input1: inp = {
+                                    p_id: cdata.p_id,
+                                    col: "p_name",
+                                    data: odata.p_name,
+                                };
+                                const input2: inp = {
+                                    p_id: cdata.p_id,
+                                    col: "value",
+                                    data: odata.value.toString(),
+                                };
+                                
+                                await dispath(AsetD(input1));
+                                await dispath(AsetD(input2));
+                                await dispath(AsetD(input4));
+                                await dispath(AsetD(input5));
+                                await dispath(inupsheet(setting));
+                            }}
+                            
+                            key={data.p_id}>
                                 <td>
-                                    <button onClick={() => { handledelete(data.p_id); }}>X</button>
-                                    <input onBlur={() => { dispath(inupsheet(setting)); }} value={data.p_name} onChange={(e: any) => {
+                                    <button onClick={async () => { await handledelete(data.p_id); }}>X</button>
+                                    <input onBlur={async () => {dispath(inupsheet(setting)); }} value={data.p_name} onChange={async (e: any) => {
                                         const input: inp = {
                                             p_id: data.p_id,
                                             col: "p_name",
@@ -54,7 +92,7 @@ const Sheet2: any = ((e: any) => {
                                         };
                                         dispath(setD(input));
                                     }} /></td>
-                                <td><input onBlur={() => { dispath(inupsheet(setting)); }} value={data.value} onChange={(e: any) => {
+                                <td><input onBlur={async () => { dispath(inupsheet(setting)); }} value={data.value} onChange={async (e: any) => {
                                     const input: inp = {
                                         p_id: data.p_id,
                                         col: "value",
@@ -77,7 +115,7 @@ const Sheet2: any = ((e: any) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <td><input value={setting.insertdata.p_name} onChange={(e: any) => {
+                        <td><input value={setting.insertdata.p_name} onChange={async (e: any) => {
                             const input: inp = {
                                 p_id: 0,
                                 col: "p_name",
@@ -95,7 +133,7 @@ const Sheet2: any = ((e: any) => {
                         }} /></td>
                     </tbody>
                 </table>
-                <button className="text-2xl font-bold text-green-700" onClick={handleSheet2Click}>제출</button>
+                <button className="text-2xl font-bold text-green-700" onClick={async ()=>{await handleSheet2Click()}}>제출</button>
             </div>
         </div>
     );

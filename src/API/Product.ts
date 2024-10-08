@@ -249,7 +249,19 @@ export const Product = createSlice({
           state.isLoading = true;
       })
 
-
+      .addCase(AsetD.fulfilled, (state, action: PayloadAction<inp>)=>{
+          const n = state.data.length;
+          for (let i = 0; i < n; i++) {
+            if (state.data[i].p_id.toString() === action.payload.p_id.toString()) {
+              if (action.payload.col == "p_name")
+                state.data[i].p_name = action.payload.data;
+              if (action.payload.col == "value")
+                state.data[i].value = Number(action.payload.data);
+              if (action.payload.col == "quantity")
+                state.data[i].quantity = Number(action.payload.data);
+            }
+          }
+      })
 
   }
 });
@@ -431,6 +443,13 @@ export const deletedata = createAsyncThunk(
     } catch (e) {
       return undefined;
     }
+  }
+)
+
+export const AsetD = createAsyncThunk(
+  "setD1",
+  async (data : inp) =>{
+    return data;
   }
 )
 
