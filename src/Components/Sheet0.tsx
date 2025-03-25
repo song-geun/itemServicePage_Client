@@ -52,6 +52,7 @@ const Sheet0: any = ((e: any) => {
     let sum: number = 0;
     setting.data.map((data: any) => (
         sum += (Number(data.quantity) * Number(data.value))));
+    console.log(setting.data);
     return (
         <div>
             <table>
@@ -64,7 +65,6 @@ const Sheet0: any = ((e: any) => {
                 </thead>
                 <tbody>
                     {
-
                         setting.data.map((data: any) => (
                             <tr className={((sheet.sheet1key == data.p_id) ? "bg-blue-400" : "bg-stone-50")} key={data.p_id}>
                                 <td>{data.p_name}</td>
