@@ -43,7 +43,9 @@ const Sheet1: any = ((e: any) => {
         const year = today.getFullYear();
         const month = ('0' + (today.getMonth() + 1)).slice(-2);
         const day = ('0' + today.getDate()).slice(-2);
+        
         const date = year + month + day;
+        console.log(date)
         const n = setting.data.length;
         const arr = [];
         for (let i = 0; i < n; i++) {
@@ -57,6 +59,7 @@ const Sheet1: any = ((e: any) => {
             };
             arr.push(d1);
         }
+        console.log(arr)
         dispath(insertsheet(arr));
     }
 
