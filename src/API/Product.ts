@@ -364,7 +364,7 @@ export const insertsheet = createAsyncThunk(
       try {
           const resp = await instance.post(
               requests.DatainsertAll,
-              JSON.stringify(data.data)
+              JSON.stringify(data)
           );
           return resp;
       } catch (e) {
@@ -389,7 +389,6 @@ export const inupsheet = createAsyncThunk(
   "insertAll",
   async (data: any) => {
     try {
-      console.log(data)
       const resp = await instance.post(
         requests.insertAll,
         JSON.stringify(data.data)
@@ -408,7 +407,7 @@ export const initinupsheet = createAsyncThunk(
     try {
       const resp = await instance.post(
         requests.insertAll,
-        JSON.stringify(data.data)
+        JSON.stringify(data)
       );
       return resp;
     } catch (e) {
